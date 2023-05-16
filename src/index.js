@@ -14,7 +14,7 @@ import Homepage from './comps/Homepage'
 import PageNotFound from './comps/NotFound';
 import BuyerData from './comps/buyer';
 import PropForm from './comps/propForm';
-import SellerProp from './comps/sellerProp';
+import SellerProp from './comps/sellerProp.js';
 import Property from './comps/property';
 import Booking from './comps/booking';
 import BuyerBookings from './comps/buyerBookings';
@@ -73,6 +73,8 @@ root.render(
         <Route path="/property" element={<Property />} />
         <Route path="/form" element={<NewForm />} />
         <Route path="/formBuyer" element={<NewForm2 />} />
+        {/* <Route path="/propForm/:sellerID/:sellerFirstName" element={<PropForm />} />
+        <Route path="/sellerProp/:sellerID/:sellerFirstName" element={<SellerProp/>}/> */}
         <Route path="/propForm/:sellerID/:sellerFirstName/:sellerSurname" element={<PropForm />} />
         <Route path="/sellerProp/:sellerID/:sellerFirstName/:sellerSurname" element={<SellerProp/>}/>
         <Route path="/property/:propertyID/:propertyAddress/:propertyPostcode" element={<Booking/>}/>
@@ -80,7 +82,7 @@ root.render(
         <Route path="/buyerBookings/:buyerID/:buyerFirstName/:buyerSurname" element={<BuyerBookings/>}/>
 
         
-                 {/* <Route path="/sellerProp" element={<SellerProp/>}/> */}
+                 <Route path="/sellerProp" element={<SellerProp/>}/>
 
       </Routes></BrowserRouter>
 

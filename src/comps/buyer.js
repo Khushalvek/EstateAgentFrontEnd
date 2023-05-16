@@ -12,7 +12,7 @@ export default function BuyerData() {
     const navigate = useNavigate()
 
     useEffect(() => {
-        fetch(`http://localhost:3000/buyer`)
+        fetch(`http://localhost:8080/buyer/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read buyers");
@@ -26,7 +26,7 @@ export default function BuyerData() {
     }, []);
 
     const showBookings=(buyer)=>{
-        const urlBuyerProperties=`/buyerBookings/${buyer.id}/${buyer.firstName}/${buyer.surname}`
+        const urlBuyerProperties=`/buyerBookings/${buyer.buyer_Id}/${buyer.firstName}/${buyer.surname}`
         navigate(urlBuyerProperties)
     }
 
@@ -35,13 +35,13 @@ export default function BuyerData() {
     
     function removeR(recno) {
 
-        let tempR = buyerList.filter(recs => recs.id != recno)
+        let tempR = buyerList.filter(recs => recs.buyer_Id != recno)
         let choice = window.confirm("Are you sure you want to delete this record")
         if (choice) {
             setbuyerList(tempR)
 
 
-            fetch(`http://localhost:3000/buyer/${recno}`, {
+            fetch(`http://localhost:8080/buyer/${recno}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -85,7 +85,7 @@ export default function BuyerData() {
                 "address": addressInputRef.current.value,
                 "postcode": postcodeInputRef.current.value,
                 "phone": phoneInputRef.current.value,
-                "id": buyerList.length + uniqueID + 1
+                "buyer_Id": buyerList.length + uniqueID + 1
             }
             // tempR = tempR.map((item, index) => {return {...item, regno: index}})
             setbuyerList([...buyerList, tempR])
@@ -167,7 +167,7 @@ showButton.current.value = "Hide"
                         </div>
                         {/* <label for="inputAddress">Address</label> */}
                         {/* <input type="text" class="form-control" id="inputAddress" placeholder="House Number"></input> */}
-                        <div class="form-group  col-md-5">
+                        {/* <div class="form-group  col-md-5">
                             <label for="inputCounty">County</label>
                             <select id="inputCounty" class="form-control">
                                 <option selected>Choose...</option>
@@ -179,7 +179,7 @@ showButton.current.value = "Hide"
                                 <option>Bristol</option>
                                 <option>Other</option>
                             </select>
-                        </div>
+                        </div> */}
                         <div class="form-group col-md-3">
                             <label for="inputPcode">Post Code</label>
                             <input type="text" ref={postcodeInputRef} class="form-control" id="inputPcode"></input>
@@ -220,7 +220,7 @@ showButton.current.value = "Hide"
                 {
 
                     buyerList.map(rec => <tr>
-                        <td> {rec.id}  </td>
+                        <td> {rec.buyer_Id}  </td>
                         <td> {rec.firstName}  </td>
                         <td> {rec.surname}  </td>
                         <td> {rec.address}  </td>
@@ -230,7 +230,7 @@ showButton.current.value = "Hide"
 </td>
                         {/* <td><input type="button" onClick={() => removeR(rec.id)}/><FontAwesomeIcon icon={faTrash} id="trashCan"/></td> */}
                         <td>    <button className="my-button">
-                            <FontAwesomeIcon icon={faTrash} onClick={() => removeR(rec.id)} />
+                            <FontAwesomeIcon icon={faTrash} onClick={() => removeR(rec.buyer_Id)} />
 
                         </button></td>
                     </tr>

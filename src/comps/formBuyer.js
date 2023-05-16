@@ -15,7 +15,7 @@ export default function NewForm2() {
     const [buyerList, setbuyerList] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:3000/buyer`)
+        fetch(`http://localhost:8080/buyer/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read buyers");
@@ -51,7 +51,7 @@ export default function NewForm2() {
 
 
 
-                fetch("http://localhost:3000/buyer", {
+                fetch("http://localhost:8080/buyer/add", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(tempR)

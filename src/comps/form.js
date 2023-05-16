@@ -38,7 +38,7 @@ export default function NewForm() {
 
 
         const tempR = {
-            "firstName": forenameInputRef.current.value,
+            "firstname": forenameInputRef.current.value,
             "surname": surnameInputRef.current.value,
             "address": addressInputRef.current.value,
             "postcode": postcodeInputRef.current.value,
@@ -46,9 +46,9 @@ export default function NewForm() {
         }
 
         const compareObjects = (obj1, obj2) =>{
-            const firstNameMatch = obj1.firstName.toLowerCase() === obj2.firstName.toLowerCase();
+            const firstnameMatch = obj1.firstname.toLowerCase() === obj2.firstname.toLowerCase();
             const surNameMatch = obj1.surname.toLowerCase() === obj2.surname.toLowerCase();
-            return firstNameMatch && surNameMatch;
+            return firstnameMatch && surNameMatch;
 };
 
         if (!sellerList.some(item => compareObjects(item, tempR))) {
@@ -59,7 +59,7 @@ export default function NewForm() {
 
 
 
-                fetch("http://localhost:3000/seller", {
+                fetch("http://localhost:8080/seller/add", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(tempR)

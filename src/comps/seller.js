@@ -20,7 +20,7 @@ export default function Sell() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3000/seller`)
+        fetch(`http://localhost:8080/seller/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read sellers");
@@ -33,7 +33,7 @@ export default function Sell() {
             });
     }, []);
     const showProperties=(seller)=>{
-        const urlSellerProperties=`/sellerProp/${seller.id}/${seller.firstName}/${seller.surname}`
+        const urlSellerProperties=`/sellerProp/${seller.seller_id}/${seller.firstname}/${seller.surname}`
         navigate(urlSellerProperties)
     }
     
@@ -42,13 +42,13 @@ export default function Sell() {
 
     function removeR(recno) {
 
-        let tempR = sellerList.filter(recs => recs.id != recno)
+        let tempR = sellerList.filter(recs => recs.seller_id != recno)
         let choice = window.confirm("Are you sure you want to delete this record")
         if (choice) {
             setSellerList(tempR)
 
 
-            fetch(`http://localhost:3000/seller/${recno}`, {
+            fetch(`http://localhost:8080/seller/delete/${recno}`, {
                 method: 'DELETE',
                 headers: {
                     'Content-Type': 'application/json',
@@ -82,11 +82,10 @@ export default function Sell() {
             <table class="table1">
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Forename</th>
-                    <th scope="col">Surname</th>
+                    <th scope="col">firstname</th>
+                    <th scope="col">surname</th>
                     <th scope="col">Address</th>
                     <th scope="col">Postcode</th>
-                    <th scope="col">Phone</th>
                     <th scope="col">Manage</th>
                     <th></th>
 
@@ -94,18 +93,17 @@ export default function Sell() {
                 {
 
                     sellerList.map(rec => <tr>
-                        <td> {rec.id}  </td>
-                        <td> {rec.firstName}  </td>
+                        <td> {rec.seller_id}  </td>
+                        <td> {rec.firstname}  </td>
                         <td> {rec.surname}  </td>
                         <td> {rec.address}  </td>
                         <td> {rec.postcode}  </td>
-                        <td> {rec.phone}  </td>
                         {/* <td><Link to={urlSellerProperties}>manage properties</Link></td> */}
                         <td>                        <button className="btn-outline-dark" onClick={()=> showProperties(rec)}>manage properties</button>
 </td>
                         {/* <td><input type="button" onClick={() => removeR(rec.id)}/><FontAwesomeIcon icon={faTrash} id="trashCan"/></td> */}
                         <td>    <button className="my-button">
-                            <FontAwesomeIcon icon={faTrash} onClick={() => removeR(rec.id)} />
+                            <FontAwesomeIcon icon={faTrash} onClick={() => removeR(rec.seller_id)} />
 
                         </button></td>
                     </tr>

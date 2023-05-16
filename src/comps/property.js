@@ -16,7 +16,7 @@ export default function Property() {
     const [propCriteria, setPropCriteria] = useState([])
 
 
-    const inputGardenRef = useRef(null);
+    const inputGardenRef = useRef();
     const inputBedRef = useRef(null);
     const inputBathRef = useRef(null);
     const inputTypeRef = useRef(null);
@@ -26,7 +26,7 @@ export default function Property() {
 
     useEffect(() => {
 
-        fetch(`http://localhost:3000/property`)
+        fetch(`http://localhost:8080/property/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read sellers");
@@ -48,7 +48,7 @@ export default function Property() {
         navigate(urlProperty)
     }
 
-
+console.log(propertyList)
 
     function showRec() {
 
@@ -65,7 +65,7 @@ export default function Property() {
 
 
 
-        fetch(`http://localhost:3000/property`)
+        fetch(`http://localhost:8080/property/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read sellers");
@@ -78,8 +78,8 @@ export default function Property() {
                     setpropertyList(pList.filter(property => {
                         return (
                             (tempR.garden === 'Any' || property.garden == tempR.garden) &&
-                            (tempR.bedroom === 'Any' || property.bedroom == tempR.bedroom) &&
-                            (tempR.bath === 'Any' || property.bathroom == tempR.bath) &&
+                            (tempR.bedroom === 'Any' || property.bedrooms == tempR.bedroom) &&
+                            (tempR.bath === 'Any' || property.bathrooms == tempR.bath) &&
                             (tempR.type === 'Any' || property.type == tempR.type) &&
                             (tempR.maxprice === 'Any' || property.price <= parseInt(tempR.maxprice)) &&
                             (tempR.status === 'Any' || property.status == tempR.status)
@@ -126,10 +126,11 @@ export default function Property() {
                         <label for="inputGarden">Garden</label>
                         <select ref={inputGardenRef} class="form-control">
                             <option selected>Any</option>
-                            <option>1</option>
-                            <option>0</option>
+                            <option value="TRUE">Yes</option>
+                            <option value="FALSE">No</option>
 
                         </select>
+
                     </div>
                     <div class="col-md-2">
                         <label for="inputMinBed">Bedrooms</label>
@@ -230,13 +231,13 @@ export default function Property() {
                 {
 
                     propertyList.map(rec => <tr>
-                        <td> {rec.id}  </td>
+                        <td> {rec.property_id}  </td>
                         <td> {rec.address}  </td>
                         <td> {rec.postcode}  </td>
                         <td> {rec.type}  </td>
                         <td> {rec.price}  </td>
-                        <td> {rec.bedroom}  </td>
-                        <td> {rec.bathroom}  </td>
+                        <td> {rec.bedrooms}  </td>
+                        <td> {rec.bathrooms}  </td>
                         <td> {rec.garden}  </td>
 
                         {

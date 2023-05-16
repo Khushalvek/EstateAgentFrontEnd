@@ -18,12 +18,13 @@ export default function PropForm() {
 
     const urlSellerProperty = `/sellerProp/${sellerID}/${sellerFirstName}/${sellerSurname}`
 
+
     const navigate = useNavigate()
 
     const [propertyList, setpropertyList] = useState([])
 
     useEffect(() => {
-        fetch(`http://localhost:3000/property`)
+        fetch(`http://localhost:8080/property/read`)
             .then((response) => {
                 if (!response.ok) {
                     alert("An error has occured, unable to read propertys");
@@ -40,12 +41,14 @@ export default function PropForm() {
         const tempR = {
             "type": typeInputRef.current.value,
             "price": priceInputRef.current.value,
-            "bedroom": bedInputRef.current.value,
-            "bathroom": bathInputRef.current.value,
+            "bedrooms": bedInputRef.current.value,
+            "bathrooms": bathInputRef.current.value,
             "garden": gardenInputRef.current.value,
             "address": addressInputRef.current.value,
             "postcode": postcodeInputRef.current.value,
-            "sellerId": sellerID,
+            "seller": {
+                "seller_id":sellerID
+            },
             "status": "FOR SALE"
 
         }
@@ -53,15 +56,16 @@ export default function PropForm() {
         const compareObjects = (obj1, obj2) => {
             return obj1.address.toLowerCase() === obj2.address.toLowerCase();
         };
-
-        if (!propertyList.some(item => compareObjects(item, tempR))) {
+console.log(tempR)
+        // if (!propertyList.some(item => compareObjects(item, tempR))) {
 
             if (postcodeInputRef.current.value != "") {
 
+                console.log(tempR)
 
 
 
-                fetch("http://localhost:3000/property", {
+                fetch("http://localhost:8080/property/add", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(tempR)
@@ -84,10 +88,10 @@ export default function PropForm() {
 
                 alert("Please enter all details")
             }
-        } else {
+        // } else {
 
-            alert("Sorry, this user is already registered")
-        }
+        //     alert("Sorry, this user is already registered")
+        // }
 
 
 
@@ -146,15 +150,17 @@ export default function PropForm() {
                 </select>
                 Garden:
                 <select className="form-select" ref={gardenInputRef}>
-                    <option value="1">Yes</option>
-                    <option value="0">No</option>
+                    <option value="TRUE">Yes</option>
+                    <option value="FALSE">No</option>
                 </select>
 
                 Address: <input ref={addressInputRef} /><br />
                 Post Code: <input ref={postcodeInputRef} /><br />
-            </form> <Link className="btn btn-primary" onClick={() => addR()}> Submit </Link>
-            <Link to={urlSellerProperty} className="btn btn-block"> Cancel </Link>
-
+                <button type="button" className="btn btn-primary" onClick={() => addR()}>submit</button>
+                <Link to={urlSellerProperty} className="btn btn-block"> Cancel </Link>
+            </form> 
+            
+{/* <Link className="btn btn-primary" onClick={() => addR()}> Submit </Link> */}
         </>)
 
 }
